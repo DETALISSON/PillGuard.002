@@ -1,0 +1,3293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0e172b">
+<title>PillGuard</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --blue:#0793cf;
+  --blue-dark:#087fb4;
+  --bg:#f2f6fc;
+  --card:#ffffff;
+  --text:#182238;
+  --muted:#758197;
+  --line:#e4e9f1;
+  --green:#20a35a;
+  --red:#df3d42;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#111827;
+  color:var(--text);
+}
+
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+}
+
+.app{
+  width:100%;
+  max-width:630px;
+  min-height:100vh;
+  margin:auto;
+  background:var(--bg);
+  position:relative;
+  padding-bottom:90px;
+}
+
+/* TOPO */
+
+.header{
+  background:#0d172b;
+  color:white;
+  padding:36px 34px 32px;
+  border-radius:0 0 42px 42px;
+}
+
+.logo{
+  font-size:29px;
+  font-weight:800;
+}
+
+.logo span{
+  color:#19a9ed;
+}
+
+.subtitle{
+  margin-top:38px;
+  color:#95a2b8;
+  font-size:16px;
+}
+
+.hello{
+  margin-top:8px;
+  font-size:34px;
+  font-weight:800;
+}
+
+/* CONTEUDO */
+
+.content{
+  padding:30px 32px;
+}
+
+.section-title{
+  font-size:24px;
+  font-weight:800;
+  margin-bottom:18px;
+}
+
+.card{
+  background:white;
+  border-radius:25px;
+  padding:22px;
+  box-shadow:0 10px 30px rgba(20,40,80,.07);
+  margin-bottom:18px;
+}
+
+/* PROXIMO */
+
+.next-card{
+  padding:27px;
+}
+
+.next-label{
+  color:var(--muted);
+  font-size:16px;
+}
+
+.next-time{
+  font-size:50px;
+  font-weight:800;
+  margin:7px 0 5px;
+}
+
+.next-name{
+  font-size:22px;
+  font-weight:800;
+}
+
+.next-dose{
+  color:var(--muted);
+  margin-top:4px;
+  font-size:18px;
+}
+
+.take-main{
+  width:100%;
+  margin-top:22px;
+  padding:17px;
+  background:var(--blue);
+  color:white;
+  border-radius:15px;
+  font-weight:800;
+  font-size:18px;
+}
+
+.take-main:disabled{
+  background:#cbd4df;
+  color:#778395;
+  cursor:not-allowed;
+}
+
+/* RESUMO */
+
+.summary{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:30px;
+}
+
+.summary-box{
+  background:white;
+  border-radius:20px;
+  padding:18px 8px;
+  text-align:center;
+}
+
+.summary-number{
+  font-size:27px;
+  font-weight:800;
+}
+
+.summary-label{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* HORARIOS */
+
+.schedule-item{
+  background:white;
+  border-radius:20px;
+  padding:16px 18px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:12px;
+  box-shadow:0 7px 20px rgba(20,40,80,.05);
+}
+
+.schedule-time{
+  width:66px;
+  font-size:18px;
+  font-weight:800;
+}
+
+.dot{
+  width:13px;
+  height:13px;
+  background:#38b8ea;
+  border-radius:50%;
+  flex-shrink:0;
+}
+
+.schedule-info{
+  flex:1;
+  min-width:0;
+}
+
+.schedule-name{
+  font-weight:800;
+  font-size:16px;
+}
+
+.schedule-dose{
+  color:var(--muted);
+  font-size:14px;
+  margin-top:4px;
+}
+
+.status-ok{
+  color:var(--green);
+  font-size:25px;
+  font-weight:800;
+}
+
+.take-small{
+  background:#dff1fb;
+  color:#087ba9;
+  padding:10px 13px;
+  border-radius:12px;
+  font-weight:800;
+}
+
+.take-small:disabled{
+  background:#edf1f5;
+  color:#a4adba;
+  cursor:not-allowed;
+}
+
+/* MEDICAMENTOS */
+
+.add-link{
+  float:right;
+  color:#0787c2;
+  font-size:16px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.med-card{
+  background:white;
+  border-radius:23px;
+  padding:20px;
+  margin-bottom:15px;
+  box-shadow:0 8px 25px rgba(20,40,80,.06);
+}
+
+.med-top{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.med-name{
+  font-size:21px;
+  font-weight:800;
+}
+
+.med-dose{
+  color:var(--muted);
+  margin-top:5px;
+}
+
+.type-badge{
+  display:inline-block;
+  margin-top:12px;
+  padding:7px 11px;
+  background:#dff2fb;
+  color:#086f99;
+  border-radius:10px;
+  font-size:13px;
+  font-weight:800;
+}
+
+.frequency{
+  margin-top:14px;
+  color:#68758a;
+  font-size:15px;
+}
+
+.time-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:12px;
+}
+
+.time-chip{
+  background:#dff1fb;
+  color:#086e98;
+  border-radius:10px;
+  padding:8px 11px;
+  font-weight:700;
+  font-size:14px;
+}
+
+.more-times{
+  background:#eef1f5;
+  color:#657185;
+}
+
+.med-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:17px;
+}
+
+.edit-btn{
+  background:#dff1fb;
+  color:#08729d;
+  padding:13px;
+  border-radius:12px;
+  font-weight:800;
+}
+
+.delete-btn{
+  background:#ffe0e0;
+  color:#d7343a;
+  padding:13px;
+  border-radius:12px;
+  font-weight:800;
+}
+
+/* NAVEGAÇÃO */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:630px;
+  height:82px;
+  background:white;
+  border-top:1px solid #e1e6ee;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  z-index:20;
+}
+
+.nav-btn{
+  background:white;
+  color:#98a4b5;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  font-size:13px;
+}
+
+.nav-icon{
+  font-size:24px;
+}
+
+.nav-btn.active{
+  color:#078ac5;
+  font-weight:800;
+}
+
+/* BOTAO + */
+
+.floating{
+  position:fixed;
+  right:max(25px, calc((100% - 630px)/2 + 25px));
+  bottom:103px;
+  width:62px;
+  height:62px;
+  border-radius:50%;
+  background:#078ec9;
+  color:white;
+  font-size:34px;
+  box-shadow:0 8px 25px rgba(0,140,200,.3);
+  z-index:15;
+}
+
+/* MODAL */
+
+.modal-bg{
+  position:fixed;
+  inset:0;
+  background:rgba(8,15,28,.62);
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:50;
+}
+
+.modal-bg.show{
+  display:flex;
+}
+
+.modal{
+  width:100%;
+  max-width:630px;
+  max-height:92vh;
+  overflow-y:auto;
+  background:white;
+  border-radius:30px 30px 0 0;
+  padding:25px;
+}
+
+.modal-title{
+  font-size:24px;
+  font-weight:800;
+  margin-bottom:22px;
+}
+
+.close-modal{
+  float:right;
+  background:#edf1f5;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  font-size:22px;
+}
+
+.form-group{
+  margin-bottom:18px;
+}
+
+.form-label{
+  display:block;
+  font-size:14px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+.form-input,
+.form-select{
+  width:100%;
+  padding:14px;
+  border:1px solid #dce2ea;
+  border-radius:13px;
+  outline:none;
+  background:white;
+}
+
+.form-input:focus,
+.form-select:focus{
+  border-color:var(--blue);
+}
+
+.type-selector{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.type-option{
+  padding:15px;
+  border:2px solid #e1e6ed;
+  background:white;
+  border-radius:14px;
+  font-weight:800;
+  color:#677489;
+}
+
+.type-option.selected{
+  border-color:var(--blue);
+  background:#e7f6fd;
+  color:#087aa6;
+}
+
+.freq-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px;
+}
+
+.freq-btn{
+  padding:13px 8px;
+  background:#f0f3f7;
+  color:#5e6b7e;
+  border-radius:12px;
+  font-weight:700;
+}
+
+.freq-btn.selected{
+  background:#dff2fb;
+  color:#087aa6;
+  box-shadow:inset 0 0 0 2px #16a4dc;
+}
+
+.interval-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.days{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:5px;
+}
+
+.day-btn{
+  padding:11px 2px;
+  border-radius:10px;
+  background:#edf1f5;
+  color:#657286;
+  font-size:12px;
+  font-weight:800;
+}
+
+.day-btn.selected{
+  background:#0793cf;
+  color:white;
+}
+
+.custom-times{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.custom-time-row{
+  display:flex;
+  width:100%;
+  gap:8px;
+}
+
+.custom-time-row input{
+  flex:1;
+}
+
+.remove-time{
+  width:45px;
+  background:#ffe0e0;
+  color:#d9363e;
+  border-radius:10px;
+}
+
+.add-time{
+  margin-top:8px;
+  background:#edf5fa;
+  color:#087ba7;
+  padding:11px 14px;
+  border-radius:11px;
+  font-weight:800;
+}
+
+.preview{
+  background:#f3f7fb;
+  border-radius:15px;
+  padding:15px;
+  margin-top:10px;
+}
+
+.preview-title{
+  font-weight:800;
+  margin-bottom:9px;
+}
+
+.preview-times{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.save-btn{
+  width:100%;
+  padding:16px;
+  background:var(--blue);
+  color:white;
+  border-radius:14px;
+  font-size:17px;
+  font-weight:800;
+  margin-top:8px;
+}
+
+/* MODAL TOMAR */
+
+.take-options{
+  display:grid;
+  gap:10px;
+}
+
+.option-btn{
+  width:100%;
+  padding:15px;
+  border-radius:13px;
+  background:#edf5fa;
+  color:#087aa5;
+  font-weight:800;
+}
+
+.confirm-take{
+  width:100%;
+  margin-top:15px;
+  padding:16px;
+  background:var(--blue);
+  color:white;
+  border-radius:14px;
+  font-weight:800;
+}
+
+/* HISTORICO */
+
+.history-item{
+  background:white;
+  border-radius:18px;
+  padding:17px;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.history-name{
+  font-weight:800;
+}
+
+.history-date{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:4px;
+}
+
+.history-time{
+  text-align:right;
+  font-weight:800;
+}
+
+.history-actual{
+  color:var(--green);
+  font-size:13px;
+  margin-top:4px;
+}
+
+/* DISPOSITIVO */
+
+.device-card{
+  background:#0d172b;
+  color:white;
+  border-radius:25px;
+  padding:25px;
+}
+
+.device-status{
+  color:#62d18d;
+  margin-top:12px;
+  font-weight:800;
+}
+
+.device-row{
+  display:flex;
+  justify-content:space-between;
+  padding:15px 0;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+
+.device-row:last-child{
+  border-bottom:0;
+}
+
+/* VAZIO */
+
+.empty{
+  text-align:center;
+  padding:35px 15px;
+  color:var(--muted);
+}
+
+/* RESPONSIVO */
+
+@media(max-width:430px){
+  .header{
+    padding:30px 26px;
+  }
+
+  .content{
+    padding:25px 24px;
+  }
+
+  .hello{
+    font-size:31px;
+  }
+
+  .next-time{
+    font-size:45px;
+  }
+
+  .summary-number{
+    font-size:24px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header class="header">
+    <div class="logo">Pill<span>Guard</span></div>
+    <div class="subtitle">Seu organizador de medicamentos</div>
+    <div class="hello">Olá! 👋</div>
+  </header>
+
+  <main class="content">
+
+    <!-- INÍCIO -->
+    <section id="page-home">
+
+      <div class="section-title">Próximo medicamento</div>
+
+      <div class="card next-card">
+
+        <div class="next-label" id="nextLabel">
+          Próximo horário
+        </div>
+
+        <div class="next-time" id="nextTime">
+          --
+        </div>
+
+        <div class="next-name" id="nextName">
+          Nenhum medicamento
+        </div>
+
+        <div class="next-dose" id="nextDose">
+          --
+        </div>
+
+        <button class="take-main" id="mainTakeBtn" disabled>
+          Ainda não está na hora
+        </button>
+
+      </div>
+
+      <div class="section-title">
+        Resumo de hoje
+      </div>
+
+      <div class="summary">
+        <div class="summary-box">
+          <div class="summary-number" id="takenCount">0</div>
+          <div class="summary-label">Tomados</div>
+        </div>
+
+        <div class="summary-box">
+          <div class="summary-number" id="pendingCount">0</div>
+          <div class="summary-label">Pendentes</div>
+        </div>
+
+        <div class="summary-box">
+          <div class="summary-number" id="totalCount">0</div>
+          <div class="summary-label">Total</div>
+        </div>
+      </div>
+
+      <div class="section-title">
+        Horários de hoje
+      </div>
+
+      <div id="todayList"></div>
+
+    </section>
+
+
+    <!-- REMÉDIOS -->
+    <section id="page-meds" style="display:none">
+
+      <div class="section-title">
+        Meus medicamentos
+
+        <span class="add-link" onclick="openAddModal()">
+          + Adicionar
+        </span>
+      </div>
+
+      <div id="medList"></div>
+
+    </section>
+
+
+    <!-- HISTÓRICO -->
+    <section id="page-history" style="display:none">
+
+      <div class="section-title">
+        Histórico
+      </div>
+
+      <div id="historyList"></div>
+
+    </section>
+
+
+    <!-- PILLGUARD -->
+    <section id="page-device" style="display:none">
+
+      <div class="section-title">
+        Meu PillGuard
+      </div>
+
+      <div class="device-card">
+
+        <div style="font-size:25px;font-weight:800">
+          PillGuard
+        </div>
+
+        <div class="device-status">
+          ● Pronto para conectar
+        </div>
+
+        <div class="device-row">
+          <span>Status</span>
+          <strong>Aguardando conexão</strong>
+        </div>
+
+        <div class="device-row">
+          <span>Bateria</span>
+          <strong>--</strong>
+        </div>
+
+        <div class="device-row">
+          <span>Bluetooth</span>
+          <strong>Disponível</strong>
+        </div>
+
+      </div>
+
+      <div class="card" style="margin-top:15px">
+        <strong>Conexão com o dispositivo</strong>
+
+        <p style="color:#758197;margin-top:9px;line-height:1.5">
+          Nesta versão o aplicativo já está preparado para receber a
+          conexão Bluetooth do PillGuard físico.
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- BOTAO FLUTUANTE -->
+
+  <button class="floating" onclick="openAddModal()">
+    +
+  </button>
+
+
+  <!-- MENU -->
+
+  <nav class="bottom-nav">
+
+    <button class="nav-btn active" onclick="showPage('home',this)">
+      <span class="nav-icon">⌂</span>
+      <span>Início</span>
+    </button>
+
+    <button class="nav-btn" onclick="showPage('meds',this)">
+      <span class="nav-icon">💊</span>
+      <span>Remédios</span>
+    </button>
+
+    <button class="nav-btn" onclick="showPage('history',this)">
+      <span class="nav-icon">✓</span>
+      <span>Histórico</span>
+    </button>
+
+    <button class="nav-btn" onclick="showPage('device',this)">
+      <span class="nav-icon">▣</span>
+      <span>PillGuard</span>
+    </button>
+
+  </nav>
+
+
+  <!-- MODAL MEDICAMENTO -->
+
+  <div class="modal-bg" id="medModal">
+
+    <div class="modal">
+
+      <button class="close-modal" onclick="closeMedModal()">
+        ×
+      </button>
+
+      <div class="modal-title" id="modalTitle">
+        Adicionar medicamento
+      </div>
+
+      <form id="medForm">
+
+        <input type="hidden" id="editId">
+
+        <div class="form-group">
+
+          <label class="form-label">
+            Nome do medicamento
+          </label>
+
+          <input
+            class="form-input"
+            id="medName"
+            type="text"
+            placeholder="Ex.: Paracetamol"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label class="form-label">
+            Tipo
+          </label>
+
+          <div class="type-selector">
+
+            <button
+              type="button"
+              class="type-option selected"
+              id="typePill"
+              onclick="selectType('pill')"
+            >
+              💊 Comprimido
+            </button>
+
+            <button
+              type="button"
+              class="type-option"
+              id="typeSyrup"
+              onclick="selectType('syrup')"
+            >
+              🥄 Xarope
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label class="form-label" id="amountLabel">
+            Quantidade
+          </label>
+
+          <input
+            class="form-input"
+            id="medAmount"
+            type="number"
+            min="0.1"
+            step="0.1"
+            placeholder="Ex.: 2"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label class="form-label">
+            Frequência
+          </label>
+
+          <div class="freq-grid">
+
+            <button
+              type="button"
+              class="freq-btn selected"
+              data-freq="once"
+              onclick="selectFreq('once')"
+            >
+              Horário específico
+            </button>
+
+            <button
+              type="button"
+              class="freq-btn"
+              data-freq="interval"
+              onclick="selectFreq('interval')"
+            >
+              A cada intervalo
+            </button>
+
+            <button
+              type="button"
+              class="freq-btn"
+              data-freq="custom"
+              onclick="selectFreq('custom')"
+            >
+              Vários horários
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- INTERVALO -->
+
+        <div
+          class="form-group"
+          id="intervalBox"
+          style="display:none"
+        >
+
+          <label class="form-label">
+            Repetir de quanto em quanto tempo?
+          </label>
+
+          <div class="interval-row">
+
+            <input
+              class="form-input"
+              id="intervalValue"
+              type="number"
+              min="1"
+              max="1440"
+              step="1"
+              placeholder="Ex.: 10"
+            >
+
+            <select
+              class="form-select"
+              id="intervalUnit"
+            >
+              <option value="minutes">Minutos</option>
+              <option value="hours">Horas</option>
+            </select>
+
+          </div>
+
+          <small style="display:block;color:#7a8799;margin-top:7px">
+            Exemplos: a cada 10 minutos, 30 minutos, 5 horas ou 7 horas.
+          </small>
+
+        </div>
+
+
+        <!-- HORARIO INICIAL -->
+
+        <div class="form-group">
+
+          <label class="form-label">
+            Horário inicial
+          </label>
+
+          <input
+            class="form-input"
+            id="startTime"
+            type="time"
+            required
+          >
+
+          <small style="display:block;color:#7a8799;margin-top:7px">
+            O aplicativo usa o horário do celular da pessoa.
+          </small>
+
+        </div>
+
+
+        <!-- HORARIOS PERSONALIZADOS -->
+
+        <div
+          class="form-group"
+          id="customTimesBox"
+          style="display:none"
+        >
+
+          <label class="form-label">
+            Horários
+          </label>
+
+          <div id="customTimes"></div>
+
+          <button
+            type="button"
+            class="add-time"
+            onclick="addCustomTime()"
+          >
+            + Adicionar horário
+          </button>
+
+        </div>
+
+
+        <!-- DIAS -->
+
+        <div class="form-group">
+
+          <label class="form-label">
+            Dias para avisar
+          </label>
+
+          <div class="days">
+
+            <button type="button" class="day-btn selected" data-day="1" onclick="toggleDay(this)">SEG</button>
+            <button type="button" class="day-btn selected" data-day="2" onclick="toggleDay(this)">TER</button>
+            <button type="button" class="day-btn selected" data-day="3" onclick="toggleDay(this)">QUA</button>
+            <button type="button" class="day-btn selected" data-day="4" onclick="toggleDay(this)">QUI</button>
+            <button type="button" class="day-btn selected" data-day="5" onclick="toggleDay(this)">SEX</button>
+            <button type="button" class="day-btn selected" data-day="6" onclick="toggleDay(this)">SÁB</button>
+            <button type="button" class="day-btn selected" data-day="0" onclick="toggleDay(this)">DOM</button>
+
+          </div>
+
+        </div>
+
+
+        <!-- PREVISAO -->
+
+        <div class="preview">
+
+          <div class="preview-title">
+            Prévia dos horários
+          </div>
+
+          <div
+            class="preview-times"
+            id="previewTimes"
+          >
+            --
+          </div>
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="save-btn"
+        >
+          Salvar medicamento
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- MODAL TOMAR -->
+
+  <div class="modal-bg" id="takeModal">
+
+    <div class="modal">
+
+      <button class="close-modal" onclick="closeTakeModal()">
+        ×
+      </button>
+
+      <div class="modal-title">
+        Registrar medicamento
+      </div>
+
+      <div id="takeInfo" style="margin-bottom:20px"></div>
+
+      <div class="form-group">
+
+        <label class="form-label">
+          Horário em que tomou
+        </label>
+
+        <input
+          class="form-input"
+          id="takenTime"
+          type="time"
+        >
+
+      </div>
+
+      <div class="take-options">
+
+        <button
+          type="button"
+          class="option-btn"
+          onclick="usePhoneTime()"
+        >
+          🕐 Usar horário atual do celular
+        </button>
+
+      </div>
+
+      <button
+        type="button"
+        class="confirm-take"
+        onclick="confirmTake()"
+      >
+        ✓ Confirmar que tomei
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   DADOS
+========================================================= */
+
+const STORAGE_KEY = "pillguard_v7";
+
+let state = JSON.parse(
+  localStorage.getItem(STORAGE_KEY) ||
+  '{"meds":[],"history":[]}'
+);
+
+let selectedType = "pill";
+let selectedFreq = "once";
+let takeData = null;
+
+
+/* =========================================================
+   SALVAR
+========================================================= */
+
+function saveState(){
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(state)
+  );
+}
+
+
+/* =========================================================
+   DATA / HORA DO CELULAR
+========================================================= */
+
+function now(){
+  return new Date();
+}
+
+function dateKey(date = now()){
+
+  const y = date.getFullYear();
+  const m = String(date.getMonth()+1).padStart(2,"0");
+  const d = String(date.getDate()).padStart(2,"0");
+
+  return `${y}-${m}-${d}`;
+}
+
+function timeString(date = now()){
+
+  const h = String(date.getHours()).padStart(2,"0");
+  const m = String(date.getMinutes()).padStart(2,"0");
+
+  return `${h}:${m}`;
+}
+
+function minutesNow(){
+
+  const d = now();
+
+  return d.getHours()*60 + d.getMinutes();
+}
+
+function formatDate(date){
+
+  return date.toLocaleDateString(
+    "pt-BR",
+    {
+      day:"2-digit",
+      month:"2-digit",
+      year:"numeric"
+    }
+  );
+}
+
+
+/* =========================================================
+   ID
+========================================================= */
+
+function uid(){
+
+  return Date.now().toString() +
+    Math.random().toString(36).slice(2);
+}
+
+
+/* =========================================================
+   TIPO
+========================================================= */
+
+function selectType(type){
+
+  selectedType = type;
+
+  document
+    .getElementById("typePill")
+    .classList.toggle(
+      "selected",
+      type === "pill"
+    );
+
+  document
+    .getElementById("typeSyrup")
+    .classList.toggle(
+      "selected",
+      type === "syrup"
+    );
+
+  const label =
+    document.getElementById("amountLabel");
+
+  const input =
+    document.getElementById("medAmount");
+
+  if(type === "syrup"){
+
+    label.textContent = "Quantidade em mL";
+
+    input.placeholder = "Ex.: 5";
+
+  }else{
+
+    label.textContent = "Quantidade de comprimidos";
+
+    input.placeholder = "Ex.: 2";
+  }
+
+  updatePreview();
+}
+
+
+/* =========================================================
+   FREQUENCIA
+========================================================= */
+
+function selectFreq(freq){
+
+  selectedFreq = freq;
+
+  document
+    .querySelectorAll(".freq-btn")
+    .forEach(btn => {
+
+      btn.classList.toggle(
+        "selected",
+        btn.dataset.freq === freq
+      );
+
+    });
+
+  document.getElementById("intervalBox")
+    .style.display =
+      freq === "interval"
+        ? "block"
+        : "none";
+
+  document.getElementById("customTimesBox")
+    .style.display =
+      freq === "custom"
+        ? "block"
+        : "none";
+
+  updatePreview();
+}
+
+
+/* =========================================================
+   DIAS
+========================================================= */
+
+function toggleDay(btn){
+
+  btn.classList.toggle("selected");
+
+  updatePreview();
+}
+
+function getSelectedDays(){
+
+  return [
+    ...document.querySelectorAll(".day-btn.selected")
+  ].map(btn => Number(btn.dataset.day));
+}
+
+
+/* =========================================================
+   MINUTOS
+========================================================= */
+
+function timeToMinutes(time){
+
+  if(!time) return 0;
+
+  const parts = time.split(":");
+
+  return (
+    Number(parts[0]) * 60 +
+    Number(parts[1])
+  );
+}
+
+function minutesToTime(total){
+
+  total =
+    ((total % 1440) + 1440) % 1440;
+
+  const h =
+    String(Math.floor(total / 60))
+      .padStart(2,"0");
+
+  const m =
+    String(total % 60)
+      .padStart(2,"0");
+
+  return `${h}:${m}`;
+}
+
+
+/* =========================================================
+   INTERVALO
+========================================================= */
+
+function intervalMinutes(med){
+
+  if(!med.intervalValue)
+    return 0;
+
+  const value =
+    Number(med.intervalValue);
+
+  if(med.intervalUnit === "hours")
+    return value * 60;
+
+  return value;
+}
+
+
+/* =========================================================
+   HORARIOS PERSONALIZADOS
+========================================================= */
+
+function addCustomTime(value=""){
+
+  const box =
+    document.getElementById("customTimes");
+
+  const row =
+    document.createElement("div");
+
+  row.className = "custom-time-row";
+
+  row.innerHTML = `
+    <input
+      class="form-input custom-time-input"
+      type="time"
+      value="${value}"
+    >
+
+    <button
+      type="button"
+      class="remove-time"
+    >
+      ×
+    </button>
+  `;
+
+  row
+    .querySelector(".remove-time")
+    .onclick = () => {
+
+      row.remove();
+
+      updatePreview();
+    };
+
+  box.appendChild(row);
+}
+
+
+/* =========================================================
+   HORARIOS DE UMA DATA
+========================================================= */
+
+function getTimesForDate(med, date){
+
+  const weekday =
+    date.getDay();
+
+  if(!med.days.includes(weekday))
+    return [];
+
+  const result = [];
+
+  /*
+    HORÁRIO ESPECÍFICO
+  */
+
+  if(med.freq === "once"){
+
+    result.push(med.startTime);
+
+    return result;
+  }
+
+
+  /*
+    HORÁRIOS PERSONALIZADOS
+  */
+
+  if(med.freq === "custom"){
+
+    return [...(med.customTimes || [])]
+      .sort();
+  }
+
+
+  /*
+    INTERVALO CONTÍNUO
+
+    Aqui está a parte importante:
+
+    Se o usuário colocar:
+
+    08:00
+    a cada 7 horas
+
+    o sistema continua:
+
+    08:00
+    15:00
+    22:00
+    05:00
+    12:00
+    19:00
+    02:00
+    ...
+
+    sem reiniciar o ciclo à meia-noite.
+  */
+
+  const interval =
+    intervalMinutes(med);
+
+  if(interval <= 0)
+    return [];
+
+  const anchor =
+    med.anchorDate || dateKey();
+
+  const anchorParts =
+    anchor.split("-").map(Number);
+
+  const anchorDate =
+    new Date(
+      anchorParts[0],
+      anchorParts[1]-1,
+      anchorParts[2]
+    );
+
+  const anchorMinutes =
+    timeToMinutes(med.startTime);
+
+  const targetStart =
+    new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    );
+
+  const anchorStart =
+    new Date(
+      anchorDate.getFullYear(),
+      anchorDate.getMonth(),
+      anchorDate.getDate()
+    );
+
+  const difference =
+    Math.floor(
+      (targetStart - anchorStart) /
+      60000
+    );
+
+  const dayStartAbsolute =
+    difference * 1440;
+
+  const dayEndAbsolute =
+    dayStartAbsolute + 1440;
+
+  let k =
+    Math.ceil(
+      (dayStartAbsolute - anchorMinutes) /
+      interval
+    );
+
+  if(k < 0)
+    k = 0;
+
+  while(true){
+
+    const occurrence =
+      anchorMinutes +
+      k * interval;
+
+    if(occurrence >= dayEndAbsolute)
+      break;
+
+    if(occurrence >= dayStartAbsolute){
+
+      const timeInsideDay =
+        occurrence - dayStartAbsolute;
+
+      result.push(
+        minutesToTime(timeInsideDay)
+      );
+    }
+
+    k++;
+
+    /*
+      Proteção para intervalos estranhos.
+    */
+    if(result.length > 200)
+      break;
+  }
+
+  return result;
+}
+
+
+/* =========================================================
+   HORARIOS DE HOJE
+========================================================= */
+
+function getTodaySchedules(){
+
+  const today =
+    now();
+
+  let result = [];
+
+  state.meds.forEach(med => {
+
+    const times =
+      getTimesForDate(
+        med,
+        today
+      );
+
+    times.forEach(time => {
+
+      result.push({
+        med,
+        time
+      });
+
+    });
+
+  });
+
+  result.sort(
+    (a,b) =>
+      timeToMinutes(a.time) -
+      timeToMinutes(b.time)
+  );
+
+  return result;
+}
+
+
+/* =========================================================
+   TOMADO?
+========================================================= */
+
+function historyKey(
+  medId,
+  date,
+  scheduledTime
+){
+
+  return (
+    medId +
+    "|" +
+    date +
+    "|" +
+    scheduledTime
+  );
+}
+
+function isTaken(
+  medId,
+  date,
+  scheduledTime
+){
+
+  const key =
+    historyKey(
+      medId,
+      date,
+      scheduledTime
+    );
+
+  return state.history.some(
+    item => item.key === key
+  );
+}
+
+
+/* =========================================================
+   PODE TOMAR?
+========================================================= */
+
+function isTimeAvailable(time){
+
+  /*
+    O botão só fica disponível
+    quando o relógio do celular
+    chega ao horário programado.
+  */
+
+  return (
+    minutesNow() >=
+    timeToMinutes(time)
+  );
+}
+
+
+/* =========================================================
+   DOSE TEXTO
+========================================================= */
+
+function doseText(med){
+
+  const amount =
+    Number(med.amount);
+
+  if(med.type === "syrup"){
+
+    return (
+      amount +
+      " mL"
+    );
+
+  }
+
+  return (
+    amount +
+    " " +
+    (
+      amount === 1
+        ? "comprimido"
+        : "comprimidos"
+    )
+  );
+}
+
+
+/* =========================================================
+   TIPO TEXTO
+========================================================= */
+
+function typeText(med){
+
+  if(med.type === "syrup")
+    return "🥄 Xarope";
+
+  return "💊 Comprimido";
+}
+
+
+/* =========================================================
+   FREQUENCIA TEXTO
+========================================================= */
+
+function frequencyText(med){
+
+  if(med.freq === "once")
+    return "Em horário específico";
+
+  if(med.freq === "custom")
+    return "Horários personalizados";
+
+  const value =
+    Number(med.intervalValue);
+
+  const unit =
+    med.intervalUnit === "hours"
+      ? (
+          value === 1
+            ? "hora"
+            : "horas"
+        )
+      : (
+          value === 1
+            ? "minuto"
+            : "minutos"
+        );
+
+  return `A cada ${value} ${unit}`;
+}
+
+
+/* =========================================================
+   PROXIMO MEDICAMENTO
+========================================================= */
+
+function getNextSchedule(){
+
+  const schedules =
+    getTodaySchedules();
+
+  const current =
+    minutesNow();
+
+  /*
+    Primeiro procura algo
+    ainda não tomado hoje.
+  */
+
+  const pending =
+    schedules.filter(item => {
+
+      if(
+        isTaken(
+          item.med.id,
+          dateKey(),
+          item.time
+        )
+      ){
+        return false;
+      }
+
+      return true;
+    });
+
+  /*
+    Prioridade:
+    1. próximo horário futuro
+    2. horário que já chegou e ainda não foi tomado
+  */
+
+  const future =
+    pending
+      .filter(
+        item =>
+          timeToMinutes(item.time) >= current
+      )
+      .sort(
+        (a,b) =>
+          timeToMinutes(a.time) -
+          timeToMinutes(b.time)
+      );
+
+  if(future.length)
+    return future[0];
+
+  /*
+    Se todos os horários de hoje
+    já passaram, pega o primeiro
+    horário do dia seguinte.
+  */
+
+  return getTomorrowSchedule();
+}
+
+
+/* =========================================================
+   AMANHÃ
+========================================================= */
+
+function getTomorrowSchedule(){
+
+  const tomorrow =
+    new Date();
+
+  tomorrow.setDate(
+    tomorrow.getDate()+1
+  );
+
+  let list = [];
+
+  state.meds.forEach(med => {
+
+    const times =
+      getTimesForDate(
+        med,
+        tomorrow
+      );
+
+    times.forEach(time => {
+
+      list.push({
+        med,
+        time,
+        tomorrow:true
+      });
+
+    });
+
+  });
+
+  list.sort(
+    (a,b) =>
+      timeToMinutes(a.time) -
+      timeToMinutes(b.time)
+  );
+
+  return list[0] || null;
+}
+
+
+/* =========================================================
+   RENDER HOME
+========================================================= */
+
+function renderHome(){
+
+  const schedules =
+    getTodaySchedules();
+
+  let taken = 0;
+
+  schedules.forEach(item => {
+
+    if(
+      isTaken(
+        item.med.id,
+        dateKey(),
+        item.time
+      )
+    ){
+      taken++;
+    }
+
+  });
+
+  document.getElementById("takenCount")
+    .textContent = taken;
+
+  document.getElementById("totalCount")
+    .textContent = schedules.length;
+
+  document.getElementById("pendingCount")
+    .textContent =
+      Math.max(
+        0,
+        schedules.length - taken
+      );
+
+
+  /*
+    PROXIMO
+  */
+
+  const next =
+    getNextSchedule();
+
+  const nextTime =
+    document.getElementById("nextTime");
+
+  const nextName =
+    document.getElementById("nextName");
+
+  const nextDose =
+    document.getElementById("nextDose");
+
+  const mainBtn =
+    document.getElementById("mainTakeBtn");
+
+  const nextLabel =
+    document.getElementById("nextLabel");
+
+  if(!next){
+
+    nextTime.textContent = "--";
+    nextName.textContent =
+      "Nenhum medicamento";
+    nextDose.textContent = "--";
+
+    mainBtn.disabled = true;
+    mainBtn.textContent =
+      "Nenhum medicamento";
+
+  }else{
+
+    nextTime.textContent =
+      next.time;
+
+    nextName.textContent =
+      next.med.name;
+
+    nextDose.textContent =
+      doseText(next.med);
+
+    if(next.tomorrow){
+
+      nextLabel.textContent =
+        "Próximo horário — amanhã";
+
+      mainBtn.disabled = true;
+
+      mainBtn.textContent =
+        "Ainda não está na hora";
+
+    }else{
+
+      nextLabel.textContent =
+        "Próximo horário";
+
+      const available =
+        isTimeAvailable(next.time);
+
+      mainBtn.disabled =
+        !available;
+
+      if(available){
+
+        mainBtn.textContent =
+          "Tomei";
+
+        mainBtn.onclick =
+          () => openTakeModal(
+            next.med,
+            next.time
+          );
+
+      }else{
+
+        mainBtn.textContent =
+          "Ainda não está na hora";
+
+        mainBtn.onclick = null;
+      }
+    }
+  }
+
+
+  /*
+    LISTA DE HOJE
+  */
+
+  const list =
+    document.getElementById(
+      "todayList"
+    );
+
+  if(!schedules.length){
+
+    list.innerHTML = `
+      <div class="empty">
+        Nenhum medicamento programado para hoje.
+      </div>
+    `;
+
+    return;
+  }
+
+  list.innerHTML = "";
+
+  schedules.forEach(item => {
+
+    const takenNow =
+      isTaken(
+        item.med.id,
+        dateKey(),
+        item.time
+      );
+
+    const available =
+      isTimeAvailable(item.time);
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "schedule-item";
+
+    let action = "";
+
+    if(takenNow){
+
+      action = `
+        <div class="status-ok">
+          ✓
+        </div>
+      `;
+
+    }else{
+
+      action = `
+        <button
+          class="take-small"
+          ${available ? "" : "disabled"}
+          onclick="openTakeModalById('${item.med.id}','${item.time}')"
+        >
+          ${available ? "Tomei" : "Aguardando"}
+        </button>
+      `;
+    }
+
+    div.innerHTML = `
+      <div class="schedule-time">
+        ${item.time}
+      </div>
+
+      <div class="dot"></div>
+
+      <div class="schedule-info">
+
+        <div class="schedule-name">
+          ${escapeHtml(item.med.name)}
+        </div>
+
+        <div class="schedule-dose">
+          ${escapeHtml(doseText(item.med))}
+        </div>
+
+      </div>
+
+      ${action}
+    `;
+
+    list.appendChild(div);
+
+  });
+}
+
+
+/* =========================================================
+   RENDER MEDICAMENTOS
+========================================================= */
+
+function renderMeds(){
+
+  const list =
+    document.getElementById(
+      "medList"
+    );
+
+  if(!state.meds.length){
+
+    list.innerHTML = `
+      <div class="empty">
+        Você ainda não cadastrou nenhum medicamento.
+        <br><br>
+        Toque em <strong>+ Adicionar</strong>.
+      </div>
+    `;
+
+    return;
+  }
+
+  list.innerHTML = "";
+
+  state.meds.forEach(med => {
+
+    const today =
+      now();
+
+    let times =
+      getTimesForDate(
+        med,
+        today
+      );
+
+    /*
+      Para intervalos muito frequentes,
+      não enche a tela com centenas
+      de horários.
+    */
+
+    const maxVisible = 36;
+
+    const visible =
+      times.slice(
+        0,
+        maxVisible
+      );
+
+    const remaining =
+      Math.max(
+        0,
+        times.length - maxVisible
+      );
+
+    let chips =
+      visible.map(
+        time =>
+          `<span class="time-chip">${time}</span>`
+      ).join("");
+
+    if(remaining > 0){
+
+      chips += `
+        <span class="time-chip more-times">
+          +${remaining} horários
+        </span>
+      `;
+    }
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "med-card";
+
+    div.innerHTML = `
+
+      <div class="med-top">
+
+        <div>
+
+          <div class="med-name">
+            ${escapeHtml(med.name)}
+          </div>
+
+          <div class="med-dose">
+            ${escapeHtml(doseText(med))}
+          </div>
+
+          <span class="type-badge">
+            ${typeText(med)}
+          </span>
+
+        </div>
+
+      </div>
+
+      <div class="frequency">
+        ${escapeHtml(frequencyText(med))}
+      </div>
+
+      <div class="time-list">
+        ${chips || "<span style='color:#7a8799'>Sem horários hoje</span>"}
+      </div>
+
+      <div class="med-actions">
+
+        <button
+          class="edit-btn"
+          onclick="editMedication('${med.id}')"
+        >
+          ✏️ Editar
+        </button>
+
+        <button
+          class="delete-btn"
+          onclick="deleteMedication('${med.id}')"
+        >
+          🗑️ Excluir
+        </button>
+
+      </div>
+    `;
+
+    list.appendChild(div);
+
+  });
+}
+
+
+/* =========================================================
+   RENDER HISTORICO
+========================================================= */
+
+function renderHistory(){
+
+  const list =
+    document.getElementById(
+      "historyList"
+    );
+
+  if(!state.history.length){
+
+    list.innerHTML = `
+      <div class="empty">
+        Nenhum medicamento registrado ainda.
+      </div>
+    `;
+
+    return;
+  }
+
+  const history =
+    [...state.history]
+      .sort(
+        (a,b) =>
+          new Date(b.createdAt) -
+          new Date(a.createdAt)
+      );
+
+  list.innerHTML = "";
+
+  history.forEach(item => {
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "history-item";
+
+    div.innerHTML = `
+
+      <div>
+
+        <div class="history-name">
+          ${escapeHtml(item.name)}
+        </div>
+
+        <div class="history-date">
+          Programado: ${item.date}
+          às ${item.scheduledTime}
+        </div>
+
+      </div>
+
+      <div class="history-time">
+
+        ${item.actualTime}
+
+        <div class="history-actual">
+          ✓ Tomado
+        </div>
+
+      </div>
+    `;
+
+    list.appendChild(div);
+
+  });
+}
+
+
+/* =========================================================
+   RENDER GERAL
+========================================================= */
+
+function render(){
+
+  renderHome();
+  renderMeds();
+  renderHistory();
+
+}
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+function escapeHtml(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+/* =========================================================
+   ABRIR ADICIONAR
+========================================================= */
+
+function openAddModal(){
+
+  document.getElementById("medModal")
+    .classList.add("show");
+
+  document.getElementById("modalTitle")
+    .textContent =
+      "Adicionar medicamento";
+
+  document.getElementById("medForm")
+    .reset();
+
+  document.getElementById("editId")
+    .value = "";
+
+  selectedType = "pill";
+  selectedFreq = "once";
+
+  selectType("pill");
+  selectFreq("once");
+
+  document.getElementById("customTimes")
+    .innerHTML = "";
+
+  /*
+    Horário inicial = horário
+    atual do celular.
+  */
+
+  document.getElementById("startTime")
+    .value = timeString();
+
+  document
+    .querySelectorAll(".day-btn")
+    .forEach(btn =>
+      btn.classList.add("selected")
+    );
+
+  updatePreview();
+}
+
+
+/* =========================================================
+   FECHAR MODAL
+========================================================= */
+
+function closeMedModal(){
+
+  document.getElementById("medModal")
+    .classList.remove("show");
+}
+
+
+/* =========================================================
+   EDITAR
+========================================================= */
+
+function editMedication(id){
+
+  const med =
+    state.meds.find(
+      m => m.id === id
+    );
+
+  if(!med)
+    return;
+
+  document.getElementById("medModal")
+    .classList.add("show");
+
+  document.getElementById("modalTitle")
+    .textContent =
+      "Editar medicamento";
+
+  document.getElementById("editId")
+    .value = med.id;
+
+  document.getElementById("medName")
+    .value = med.name;
+
+  document.getElementById("medAmount")
+    .value = med.amount;
+
+  selectType(
+    med.type || "pill"
+  );
+
+  selectFreq(
+    med.freq || "once"
+  );
+
+  document.getElementById("intervalValue")
+    .value =
+      med.intervalValue || "";
+
+  document.getElementById("intervalUnit")
+    .value =
+      med.intervalUnit || "hours";
+
+  document.getElementById("startTime")
+    .value =
+      med.startTime || timeString();
+
+  document
+    .querySelectorAll(".day-btn")
+    .forEach(btn => {
+
+      btn.classList.toggle(
+        "selected",
+        med.days.includes(
+          Number(btn.dataset.day)
+        )
+      );
+
+    });
+
+  document.getElementById("customTimes")
+    .innerHTML = "";
+
+  if(med.customTimes){
+
+    med.customTimes.forEach(
+      time => addCustomTime(time)
+    );
+
+  }
+
+  updatePreview();
+}
+
+
+/* =========================================================
+   EXCLUIR
+========================================================= */
+
+function deleteMedication(id){
+
+  const med =
+    state.meds.find(
+      m => m.id === id
+    );
+
+  if(!med)
+    return;
+
+  const confirmed =
+    window.confirm(
+      `Tem certeza que deseja excluir o medicamento "${med.name}"?`
+    );
+
+  if(!confirmed)
+    return;
+
+  /*
+    Remove medicamento
+  */
+
+  state.meds =
+    state.meds.filter(
+      m => m.id !== id
+    );
+
+  /*
+    Remove também o histórico
+    daquele medicamento.
+  */
+
+  state.history =
+    state.history.filter(
+      h => h.medId !== id
+    );
+
+  saveState();
+
+  render();
+
+  alert(
+    "Medicamento excluído com sucesso."
+  );
+}
+
+
+/* =========================================================
+   FORMULARIO
+========================================================= */
+
+document
+  .getElementById("medForm")
+  .addEventListener(
+    "submit",
+    function(event){
+
+      event.preventDefault();
+
+      const name =
+        document.getElementById(
+          "medName"
+        ).value.trim();
+
+      const amount =
+        Number(
+          document.getElementById(
+            "medAmount"
+          ).value
+        );
+
+      const startTime =
+        document.getElementById(
+          "startTime"
+        ).value;
+
+      const days =
+        getSelectedDays();
+
+      if(!name){
+
+        alert(
+          "Digite o nome do medicamento."
+        );
+
+        return;
+      }
+
+      if(!amount || amount <= 0){
+
+        alert(
+          "Digite uma quantidade válida."
+        );
+
+        return;
+      }
+
+      if(!startTime){
+
+        alert(
+          "Escolha o horário inicial."
+        );
+
+        return;
+      }
+
+      if(!days.length){
+
+        alert(
+          "Selecione pelo menos um dia."
+        );
+
+        return;
+      }
+
+
+      /*
+        Intervalo
+      */
+
+      let intervalValue = null;
+      let intervalUnit = null;
+
+      if(selectedFreq === "interval"){
+
+        intervalValue =
+          Number(
+            document.getElementById(
+              "intervalValue"
+            ).value
+          );
+
+        intervalUnit =
+          document.getElementById(
+            "intervalUnit"
+          ).value;
+
+        if(
+          !intervalValue ||
+          intervalValue < 1
+        ){
+
+          alert(
+            "Digite um intervalo válido."
+          );
+
+          return;
+        }
+
+        if(
+          intervalUnit === "minutes" &&
+          intervalValue > 1440
+        ){
+
+          alert(
+            "Para minutos, use no máximo 1440 minutos."
+          );
+
+          return;
+        }
+
+        if(
+          intervalUnit === "hours" &&
+          intervalValue > 24
+        ){
+
+          alert(
+            "Para horas, use no máximo 24 horas."
+          );
+
+          return;
+        }
+      }
+
+
+      /*
+        Horários personalizados
+      */
+
+      let customTimes = [];
+
+      if(selectedFreq === "custom"){
+
+        customTimes =
+          [
+            ...document.querySelectorAll(
+              ".custom-time-input"
+            )
+          ]
+          .map(input => input.value)
+          .filter(Boolean)
+          .sort();
+
+        if(!customTimes.length){
+
+          alert(
+            "Adicione pelo menos um horário."
+          );
+
+          return;
+        }
+      }
+
+
+      const editId =
+        document.getElementById(
+          "editId"
+        ).value;
+
+      const existing =
+        state.meds.find(
+          m => m.id === editId
+        );
+
+      const medication = {
+
+        id:
+          editId ||
+          uid(),
+
+        name,
+
+        type:
+          selectedType,
+
+        amount,
+
+        freq:
+          selectedFreq,
+
+        intervalValue,
+
+        intervalUnit,
+
+        startTime,
+
+        customTimes,
+
+        days,
+
+        /*
+          O ciclo contínuo começa
+          no dia em que o medicamento
+          é cadastrado.
+        */
+
+        anchorDate:
+          existing?.anchorDate ||
+          dateKey(),
+
+        createdAt:
+          existing?.createdAt ||
+          new Date().toISOString()
+
+      };
+
+
+      if(editId){
+
+        const index =
+          state.meds.findIndex(
+            m => m.id === editId
+          );
+
+        if(index >= 0){
+
+          state.meds[index] =
+            medication;
+
+        }
+
+      }else{
+
+        state.meds.push(
+          medication
+        );
+
+      }
+
+
+      saveState();
+
+      closeMedModal();
+
+      render();
+
+    }
+  );
+
+
+/* =========================================================
+   PREVISAO
+========================================================= */
+
+function updatePreview(){
+
+  const box =
+    document.getElementById(
+      "previewTimes"
+    );
+
+  const startTime =
+    document.getElementById(
+      "startTime"
+    ).value;
+
+  if(!startTime){
+
+    box.innerHTML = "--";
+
+    return;
+  }
+
+
+  let times = [];
+
+
+  /*
+    HORARIO ESPECIFICO
+  */
+
+  if(selectedFreq === "once"){
+
+    times = [startTime];
+
+  }
+
+
+  /*
+    INTERVALO
+  */
+
+  else if(selectedFreq === "interval"){
+
+    const value =
+      Number(
+        document.getElementById(
+          "intervalValue"
+        ).value
+      );
+
+    const unit =
+      document.getElementById(
+        "intervalUnit"
+      ).value;
+
+    if(!value){
+
+      box.innerHTML =
+        "Digite o intervalo.";
+
+      return;
+    }
+
+    const interval =
+      unit === "hours"
+        ? value * 60
+        : value;
+
+    let current =
+      timeToMinutes(startTime);
+
+    /*
+      Mostra no máximo 36
+      ocorrências na prévia.
+    */
+
+    for(
+      let i=0;
+      i<36;
+      i++
+    ){
+
+      times.push(
+        minutesToTime(current)
+      );
+
+      current += interval;
+    }
+
+  }
+
+
+  /*
+    PERSONALIZADO
+  */
+
+  else{
+
+    times =
+      [
+        ...document.querySelectorAll(
+          ".custom-time-input"
+        )
+      ]
+      .map(input => input.value)
+      .filter(Boolean)
+      .sort();
+
+  }
+
+
+  if(!times.length){
+
+    box.innerHTML = "--";
+
+    return;
+  }
+
+  box.innerHTML =
+    times
+      .map(
+        time =>
+          `<span class="time-chip">${time}</span>`
+      )
+      .join("");
+}
+
+
+/* =========================================================
+   ATUALIZAR PREVISAO AO DIGITAR
+========================================================= */
+
+document
+  .getElementById("intervalValue")
+  .addEventListener(
+    "input",
+    updatePreview
+  );
+
+document
+  .getElementById("intervalUnit")
+  .addEventListener(
+    "change",
+    updatePreview
+  );
+
+document
+  .getElementById("startTime")
+  .addEventListener(
+    "change",
+    updatePreview
+  );
+
+
+/* =========================================================
+   MODAL TOMAR
+========================================================= */
+
+function openTakeModalById(
+  id,
+  scheduledTime
+){
+
+  const med =
+    state.meds.find(
+      m => m.id === id
+    );
+
+  if(!med)
+    return;
+
+  openTakeModal(
+    med,
+    scheduledTime
+  );
+}
+
+
+function openTakeModal(
+  med,
+  scheduledTime
+){
+
+  /*
+    SEGURANÇA:
+    nunca abre para registrar
+    antes do horário.
+  */
+
+  if(
+    timeToMinutes(scheduledTime) >
+    minutesNow()
+  ){
+
+    alert(
+      `Ainda não chegou o horário de tomar ${med.name}.`
+    );
+
+    return;
+  }
+
+  takeData = {
+
+    medId:
+      med.id,
+
+    scheduledTime,
+
+    date:
+      dateKey()
+
+  };
+
+
+  document.getElementById(
+    "takeInfo"
+  ).innerHTML = `
+
+    <div style="font-size:20px;font-weight:800">
+      ${escapeHtml(med.name)}
+    </div>
+
+    <div style="color:#758197;margin-top:6px">
+      ${escapeHtml(doseText(med))}
+    </div>
+
+    <div style="color:#758197;margin-top:6px">
+      Horário programado:
+      <strong>${scheduledTime}</strong>
+    </div>
+
+  `;
+
+
+  /*
+    Começa automaticamente
+    com o horário do celular.
+  */
+
+  usePhoneTime();
+
+  document.getElementById("takeModal")
+    .classList.add("show");
+}
+
+
+function closeTakeModal(){
+
+  document.getElementById("takeModal")
+    .classList.remove("show");
+
+  takeData = null;
+}
+
+
+/* =========================================================
+   HORARIO DO CELULAR
+========================================================= */
+
+function usePhoneTime(){
+
+  document.getElementById(
+    "takenTime"
+  ).value =
+    timeString();
+}
+
+
+/* =========================================================
+   CONFIRMAR TOMADA
+========================================================= */
+
+function confirmTake(){
+
+  if(!takeData)
+    return;
+
+  const med =
+    state.meds.find(
+      m => m.id === takeData.medId
+    );
+
+  if(!med){
+
+    closeTakeModal();
+
+    return;
+  }
+
+
+  /*
+    CONFERE NOVAMENTE O HORARIO.
+
+    Isso impede que alguém consiga
+    registrar antes da hora mesmo
+    que o modal tenha ficado aberto.
+  */
+
+  if(
+    minutesNow() <
+    timeToMinutes(
+      takeData.scheduledTime
+    )
+  ){
+
+    alert(
+      "Ainda não chegou o horário programado."
+    );
+
+    return;
+  }
+
+
+  let actualTime =
+    document.getElementById(
+      "takenTime"
+    ).value;
+
+  if(!actualTime){
+
+    actualTime =
+      timeString();
+  }
+
+
+  const key =
+    historyKey(
+      takeData.medId,
+      takeData.date,
+      takeData.scheduledTime
+    );
+
+
+  /*
+    Não permite registrar duas vezes
+    o mesmo horário.
+  */
+
+  if(
+    state.history.some(
+      item => item.key === key
+    )
+  ){
+
+    alert(
+      "Esse horário já foi registrado."
+    );
+
+    closeTakeModal();
+
+    return;
+  }
+
+
+  state.history.push({
+
+    key,
+
+    medId:
+      takeData.medId,
+
+    name:
+      med.name,
+
+    date:
+      takeData.date,
+
+    scheduledTime:
+      takeData.scheduledTime,
+
+    actualTime,
+
+    createdAt:
+      new Date().toISOString()
+
+  });
+
+
+  saveState();
+
+  closeTakeModal();
+
+  render();
+
+}
+
+
+/* =========================================================
+   PAGINAS
+========================================================= */
+
+function showPage(page, button){
+
+  document.getElementById(
+    "page-home"
+  ).style.display =
+    page === "home"
+      ? "block"
+      : "none";
+
+  document.getElementById(
+    "page-meds"
+  ).style.display =
+    page === "meds"
+      ? "block"
+      : "none";
+
+  document.getElementById(
+    "page-history"
+  ).style.display =
+    page === "history"
+      ? "block"
+      : "none";
+
+  document.getElementById(
+    "page-device"
+  ).style.display =
+    page === "device"
+      ? "block"
+      : "none";
+
+
+  document
+    .querySelectorAll(".nav-btn")
+    .forEach(btn =>
+      btn.classList.remove("active")
+    );
+
+  button.classList.add("active");
+
+}
+
+
+/* =========================================================
+   ATUALIZAÇÃO AUTOMATICA DO RELOGIO
+========================================================= */
+
+/*
+  O aplicativo consulta o relógio do
+  próprio aparelho a cada segundo.
+
+  Portanto, se o celular mudar de:
+  00:59 -> 01:00
+
+  o botão é atualizado automaticamente.
+*/
+
+setInterval(
+  () => {
+
+    renderHome();
+
+  },
+  1000
+);
+
+
+/* =========================================================
+   FECHAR MODAIS CLICANDO FORA
+========================================================= */
+
+document
+  .getElementById("medModal")
+  .addEventListener(
+    "click",
+    function(event){
+
+      if(event.target === this)
+        closeMedModal();
+
+    }
+  );
+
+document
+  .getElementById("takeModal")
+  .addEventListener(
+    "click",
+    function(event){
+
+      if(event.target === this)
+        closeTakeModal();
+
+    }
+  );
+
+
+/* =========================================================
+   INICIO
+========================================================= */
+
+render();
+
+</script>
+
+</body>
+</html>
